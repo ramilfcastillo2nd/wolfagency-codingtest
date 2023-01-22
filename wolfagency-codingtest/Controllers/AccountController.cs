@@ -59,9 +59,9 @@ namespace wolfagency_codingtest.Controllers
             claims.Add(new Claim("DotNetMania", "Code"));
             if (result.Succeeded)
             {
-                var claimsIdentity = new ClaimsIdentity(claims, "Login");
-
-                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
+                var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                var principal = new ClaimsPrincipal(claimsIdentity);
+                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
                 return LocalRedirect(ReturnUrl == null ? "/Home/Index" : ReturnUrl);
             }
             else
@@ -69,3 +69,4 @@ namespace wolfagency_codingtest.Controllers
         }
     }
 }
+    
